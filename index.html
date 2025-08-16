@@ -110,6 +110,33 @@ p {
     <a href="plotnost.html">Плотность грунта</a>
     <a href="plotnost_chastic.html">Плотность частиц грунта</a>
 </div>
+<footer style="
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    z-index: 100;
+">
+    <div>© 2025 Geocalculator. Геологические расчеты онлайн</div>
+    <div>Текущее время: <span id="current-time">--:--:--</span></div>
+</footer>
+
+<script>
+function updateClock() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2,'0');
+    const minutes = String(now.getMinutes()).padStart(2,'0');
+    const seconds = String(now.getSeconds()).padStart(2,'0');
+    document.getElementById("current-time").textContent = `${hours}:${minutes}:${seconds}`;
+}
+
+// Обновляем каждую секунду
+setInterval(updateClock, 1000);
+updateClock(); // сразу показать текущее время
+</script>
 
 </body>
 </html>
