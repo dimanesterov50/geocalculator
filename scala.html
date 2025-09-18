@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Содержание органических веществ</title>
+    <title>Скальный грунт</title>
     <script src="https://unpkg.com/xlsx@0.21.0/dist/xlsx.full.min.js"></script>
     <style>
         * {
@@ -19,9 +19,9 @@
             font-family: Arial, sans-serif;
             background-color: #ffffff;
             padding: 20px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150"><g fill="none" stroke="%235d8aa8" stroke-opacity="0.1" stroke-width="1.5"><path d="M30 120 Q40 100 50 120 Q60 110 70 120 Q80 100 90 120" stroke-dasharray="5 5"/><path d="M110 30 Q120 50 130 30 Q140 40 150 30" stroke-dasharray="5 5"/><path d="M20 80 Q30 60 40 80 Q50 70 60 80" stroke-dasharray="5 5"/><path d="M90 40 L100 60 L110 40 Z"/><path d="M60 100 L70 120 L80 100 Z"/></g></svg>');
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><g fill="none" stroke="%238d6e63" stroke-opacity="0.15" stroke-width="1.5"><path d="M30,150 L70,130 L50,110 L30,120 Z" stroke-dasharray="3 3"/><path d="M120,50 L160,70 L140,90 L120,80 Z" stroke-dasharray="3 3"/><path d="M80,180 L100,160 L90,140 L80,150 Z" stroke-dasharray="3 3"/><polygon points="10,10 40,30 20,50 10,40" stroke-dasharray="3 3"/></g></svg>');
             background-repeat: repeat;
-            background-size: 150px;
+            background-size: 200px;
         }
 
         .top-menu {
@@ -255,6 +255,21 @@
             border: 1px solid #ccc;
             font-size: 13px;
         }
+        .humidity-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .humidity-group input {
+            flex: 3;
+            width: 70%;
+        }
+        .humidity-group select {
+            flex: 1;
+            width: 30%;
+            min-width: 60px;
+            max-width: 80px;
+        }
 
         .sample-result {
             font-size: 12px;
@@ -417,6 +432,20 @@
             .sample-row input, .sample-row select {
                 width: 100%;
             }
+            .humidity-group {
+                flex-direction: row;
+                width: 100%;
+            }
+            .humidity-group input {
+                flex: 3;
+                width: 70%;
+            }
+            .humidity-group select {
+                flex: 1;
+                width: 30%;
+                min-width: 60px;
+                max-width: 80px;
+            }
             .average-container {
                 width: 100%;
                 justify-content: space-between;
@@ -451,30 +480,45 @@
         <a href="scala.html">Скальный грунт</a>
         <a href="contacts.html">Контакты</a>
         <a href="reference.html">Справочник</a>
-
     </div>
 
     <div class="header-text">
-        <h1>Содержание органических веществ</h1>
-        <p>Выберите метод для расчета содержания органических веществ ниже, а затем введите данные в таблицу. <br>Для каждого испытания вводятся данные образцов, на основе которых рассчитывается результат в процентах. Расчет ведтся в соответствии с ГОСТ 23740-2016.</p>
+        <h1>Скальный грунт</h1>
+        <p>Выберите метод для расчета параметров скального грунта ниже, а затем введите данные в таблицу. <br>Для каждого испытания вводятся данные образцов, на основе которых рассчитываются средние значения.</p>
     </div>
 
     <div class="method-buttons">
-        <button class="action-btn method-btn initial" id="btn-residues" onclick="App.toggleMethod('residues')" aria-label="Метод определения растительных остатков">Метод определения растительных остатков</button>
-        <button class="action-btn method-btn initial" id="btn-calcination" onclick="App.toggleMethod('calcination')" aria-label="Метод прокаливания до постоянной массы">Метод прокаливания до постоянной массы</button>
+        <button class="action-btn method-btn initial" id="btn-humidity" onclick="App.toggleMethod('humidity')" aria-label="Расчет влажности">Влажность</button>
+        <button class="action-btn method-btn initial" id="btn-density" onclick="App.toggleMethod('density')" aria-label="Расчет плотности">Плотность</button>
+        <button class="action-btn method-btn initial" id="btn-water-absorption" onclick="App.toggleMethod('water-absorption')" aria-label="Расчет водопоглощения">Водопоглощение</button>
+        <button class="action-btn method-btn initial" id="btn-abrasion" onclick="App.toggleMethod('abrasion')" aria-label="Расчет истираемости">Истираемость</button>
     </div>
 
-    <div id="test-container-residues" class="test-container">
-        <div class="tests-container" id="tests-container-residues"></div>
+    <div id="test-container-humidity" class="test-container">
+        <div class="tests-container" id="tests-container-humidity"></div>
         <div style="text-align: center; margin-top: 25px;">
-            <button class="action-btn always-active" onclick="App.addTest('residues')" aria-label="Добавить новое испытание">+ Добавить испытание</button>
+            <button class="action-btn always-active" onclick="App.addTest('humidity')" aria-label="Добавить новое испытание">+ Добавить испытание</button>
         </div>
     </div>
 
-    <div id="test-container-calcination" class="test-container">
-        <div class="tests-container" id="tests-container-calcination"></div>
+    <div id="test-container-density" class="test-container">
+        <div class="tests-container" id="tests-container-density"></div>
         <div style="text-align: center; margin-top: 25px;">
-            <button class="action-btn always-active" onclick="App.addTest('calcination')" aria-label="Добавить новое испытание">+ Добавить испытание</button>
+            <button class="action-btn always-active" onclick="App.addTest('density')" aria-label="Добавить новое испытание">+ Добавить испытание</button>
+        </div>
+    </div>
+
+    <div id="test-container-water-absorption" class="test-container">
+        <div class="tests-container" id="tests-container-water-absorption"></div>
+        <div style="text-align: center; margin-top: 25px;">
+            <button class="action-btn always-active" onclick="App.addTest('water-absorption')" aria-label="Добавить новое испытание">+ Добавить испытание</button>
+        </div>
+    </div>
+
+    <div id="test-container-abrasion" class="test-container">
+        <div class="tests-container" id="tests-container-abrasion"></div>
+        <div style="text-align: center; margin-top: 25px;">
+            <button class="action-btn always-active" onclick="App.addTest('abrasion')" aria-label="Добавить новое испытание">+ Добавить испытание</button>
         </div>
     </div>
 
@@ -487,7 +531,7 @@
                     } else {
                         console.log("SheetJS library loaded successfully");
                     }
-                    console.log('Organic content page loaded');
+                    console.log('Rock soil page loaded');
                 });
             },
 
@@ -505,7 +549,7 @@
                     const calcDiv = input.closest(".calculation-container");
                     const method = calcDiv.querySelector(".btn-calc-green").getAttribute("onclick").match(/'([^']+)'/)[1];
                     const sampleBlocks = Array.from(calcDiv.querySelectorAll(".sample-block"));
-                    const allInputs = Array.from(calcDiv.querySelectorAll(".sample-row input"));
+                    const allInputs = Array.from(calcDiv.querySelectorAll(".sample-row input, .sample-row select"));
                     const currentIndex = allInputs.indexOf(input);
                     const currentSampleBlock = input.closest(".sample-block");
                     const currentSampleIndex = sampleBlocks.indexOf(currentSampleBlock);
@@ -520,9 +564,9 @@
             },
 
             toggleMethod(method) {
-                const buttons = ['residues', 'calcination'].map(id => document.getElementById(`btn-${id}`));
+                const buttons = ['humidity', 'density', 'water-absorption', 'abrasion'].map(id => document.getElementById(`btn-${id}`));
                 buttons.forEach(btn => btn.classList.remove('initial'));
-                const containers = ['residues', 'calcination'].map(id => document.getElementById(`test-container-${id}`));
+                const containers = ['humidity', 'density', 'water-absorption', 'abrasion'].map(id => document.getElementById(`test-container-${id}`));
                 containers.forEach(container => container.classList.remove('active'));
                 document.getElementById(`test-container-${method}`).classList.add('active');
                 buttons.forEach(btn => btn.classList.remove('active'));
@@ -544,26 +588,59 @@
                 calcDiv.classList.add("calculation-container");
 
                 let sampleContent;
-                if (method === 'residues') {
+                let defaultUnit = 'percent'; // По умолчанию для водопоглощения
+                if (method === 'humidity') {
                     sampleContent = `
                         <div class="sample-block">
                             <div class="sample-content">
                                 <div class="sample-row">
-                                    <input type="number" class="residues-mass" placeholder="Масса сухих растительных остатков, г" aria-label="Масса сухих растительных остатков" onkeypress="App.focusNextInput(event, this)">
-                                    <input type="number" class="soil-mass" placeholder="Масса сухого грунта, г" aria-label="Масса сухого грунта" onkeypress="App.focusNextInput(event, this)">
+                                    <input type="number" class="wet-mass" placeholder="Масса влажного грунта, г" aria-label="Масса влажного грунта" onkeypress="App.focusNextInput(event, this)">
+                                    <input type="number" class="dry-mass" placeholder="Масса сухого грунта, г" aria-label="Масса сухого грунта" onkeypress="App.focusNextInput(event, this)">
                                 </div>
                             </div>
                             <div class="sample-result">-</div>
                         </div>
                     `;
-                } else if (method === 'calcination') {
+                } else if (method === 'density') {
                     sampleContent = `
                         <div class="sample-block">
                             <div class="sample-content">
                                 <div class="sample-row">
-                                    <input type="number" class="crucible-weight" placeholder="Вес тигля, г" aria-label="Вес тигля" onkeypress="App.focusNextInput(event, this)">
-                                    <input type="number" class="before-weight" placeholder="Вес тигля с грунтом до прокаливания, г" aria-label="Вес тигля с грунтом до прокаливания" onkeypress="App.focusNextInput(event, this)">
-                                    <input type="number" class="after-weight" placeholder="Вес тигля с грунтом после прокаливания, г" aria-label="Вес тигля с грунтом после прокаливания" onkeypress="App.focusNextInput(event, this)">
+                                    <input type="number" class="soil-mass" placeholder="Масса грунта, г" aria-label="Масса грунта" onkeypress="App.focusNextInput(event, this)">
+                                    <input type="number" class="water-mass" placeholder="Масса грунта в воде, г" aria-label="Масса грунта в воде" onkeypress="App.focusNextInput(event, this)">
+                                </div>
+                            </div>
+                            <div class="sample-result">-</div>
+                        </div>
+                    `;
+                } else if (method === 'water-absorption') {
+                    const firstSample = container.querySelector('.sample-block');
+                    defaultUnit = firstSample ? firstSample.querySelector('.humidity-unit').value : 'percent';
+                    sampleContent = `
+                        <div class="sample-block">
+                            <div class="sample-content">
+                                <div class="sample-row">
+                                    <div class="humidity-group">
+                                        <input type="number" class="humidity-value" placeholder="Влажность грунта" aria-label="Влажность грунта" onkeypress="App.focusNextInput(event, this)">
+                                        <select class="humidity-unit" aria-label="Единица измерения влажности">
+                                            <option value="percent" ${defaultUnit === 'percent' ? 'selected' : ''}>%</option>
+                                            <option value="decimal" ${defaultUnit === 'decimal' ? 'selected' : ''}>д.е.</option>
+                                        </select>
+                                    </div>
+                                    <input type="number" class="mass-before" placeholder="Масса до замачивания, г" aria-label="Масса до замачивания" onkeypress="App.focusNextInput(event, this)">
+                                    <input type="number" class="mass-after" placeholder="Масса после замачивания, г" aria-label="Масса после замачивания" onkeypress="App.focusNextInput(event, this)">
+                                </div>
+                            </div>
+                            <div class="sample-result">-</div>
+                        </div>
+                    `;
+                } else if (method === 'abrasion') {
+                    sampleContent = `
+                        <div class="sample-block">
+                            <div class="sample-content">
+                                <div class="sample-row">
+                                    <input type="number" class="mass-before" placeholder="Масса до испытания, г" aria-label="Масса до испытания" onkeypress="App.focusNextInput(event, this)">
+                                    <input type="number" class="mass-over-2mm" placeholder="Масса фракции >2 мм, г" aria-label="Масса фракции >2 мм" onkeypress="App.focusNextInput(event, this)">
                                 </div>
                             </div>
                             <div class="sample-result">-</div>
@@ -575,8 +652,8 @@
 
                 calcDiv.innerHTML += `
                     <div class="average-container">
-                        <span class="average-label">Среднее содержание:</span>
-                        <div class="result-average"><span class="organic-value">-</span></div>
+                        <span class="average-label">${method === 'abrasion' ? 'Коэффициент истираемости' : 'Среднее значение'}:</span>
+                        <div class="result-average"><span class="result-value">-</span></div>
                     </div>
                     <div class="action-row">
                         <div>
@@ -605,24 +682,55 @@
                 sampleBlock.style.animationDelay = `${(sampleCount - 1) * 0.15}s`;
 
                 let sampleContent;
-                if (method === 'residues') {
+                let defaultUnit = 'percent';
+                if (method === 'humidity') {
                     sampleContent = `
                         <div class="sample-content">
                             <div class="sample-row">
-                                <input type="number" class="residues-mass" placeholder="Масса сухих растительных остатков, г" aria-label="Масса сухих растительных остатков" onkeypress="App.focusNextInput(event, this)">
-                                <input type="number" class="soil-mass" placeholder="Масса сухого грунта, г" aria-label="Масса сухого грунта" onkeypress="App.focusNextInput(event, this)">
+                                <input type="number" class="wet-mass" placeholder="Масса влажного грунта, г" aria-label="Масса влажного грунта" onkeypress="App.focusNextInput(event, this)">
+                                <input type="number" class="dry-mass" placeholder="Масса сухого грунта, г" aria-label="Масса сухого грунта" onkeypress="App.focusNextInput(event, this)">
                             </div>
                         </div>
                         <div class="sample-result">-</div>
                         <button class="btn-delete-sample" onclick="App.deleteSample(this)" aria-label="Удалить образец">—</button>
                     `;
-                } else if (method === 'calcination') {
+                } else if (method === 'density') {
                     sampleContent = `
                         <div class="sample-content">
                             <div class="sample-row">
-                                <input type="number" class="crucible-weight" placeholder="Вес тигля, г" aria-label="Вес тигля" onkeypress="App.focusNextInput(event, this)">
-                                <input type="number" class="before-weight" placeholder="Вес тигля с грунтом до прокаливания, г" aria-label="Вес тигля с грунтом до прокаливания" onkeypress="App.focusNextInput(event, this)">
-                                <input type="number" class="after-weight" placeholder="Вес тигля с грунтом после прокаливания, г" aria-label="Вес тигля с грунтом после прокаливания" onkeypress="App.focusNextInput(event, this)">
+                                <input type="number" class="soil-mass" placeholder="Масса грунта, г" aria-label="Масса грунта" onkeypress="App.focusNextInput(event, this)">
+                                <input type="number" class="water-mass" placeholder="Масса грунта в воде, г" aria-label="Масса грунта в воде" onkeypress="App.focusNextInput(event, this)">
+                            </div>
+                        </div>
+                        <div class="sample-result">-</div>
+                        <button class="btn-delete-sample" onclick="App.deleteSample(this)" aria-label="Удалить образец">—</button>
+                    `;
+                } else if (method === 'water-absorption') {
+                    const firstSample = calcDiv.querySelector('.sample-block');
+                    defaultUnit = firstSample ? firstSample.querySelector('.humidity-unit').value : 'percent';
+                    sampleContent = `
+                        <div class="sample-content">
+                            <div class="sample-row">
+                                <div class="humidity-group">
+                                    <input type="number" class="humidity-value" placeholder="Влажность грунта" aria-label="Влажность грунта" onkeypress="App.focusNextInput(event, this)">
+                                    <select class="humidity-unit" aria-label="Единица измерения влажности">
+                                        <option value="percent" ${defaultUnit === 'percent' ? 'selected' : ''}>%</option>
+                                        <option value="decimal" ${defaultUnit === 'decimal' ? 'selected' : ''}>д.е.</option>
+                                    </select>
+                                </div>
+                                <input type="number" class="mass-before" placeholder="Масса до замачивания, г" aria-label="Масса до замачивания" onkeypress="App.focusNextInput(event, this)">
+                                <input type="number" class="mass-after" placeholder="Масса после замачивания, г" aria-label="Масса после замачивания" onkeypress="App.focusNextInput(event, this)">
+                            </div>
+                        </div>
+                        <div class="sample-result">-</div>
+                        <button class="btn-delete-sample" onclick="App.deleteSample(this)" aria-label="Удалить образец">—</button>
+                    `;
+                } else if (method === 'abrasion') {
+                    sampleContent = `
+                        <div class="sample-content">
+                            <div class="sample-row">
+                                <input type="number" class="mass-before" placeholder="Масса до испытания, г" aria-label="Масса до испытания" onkeypress="App.focusNextInput(event, this)">
+                                <input type="number" class="mass-over-2mm" placeholder="Масса фракции >2 мм, г" aria-label="Масса фракции >2 мм" onkeypress="App.focusNextInput(event, this)">
                             </div>
                         </div>
                         <div class="sample-result">-</div>
@@ -645,57 +753,91 @@
                 const calcDiv = btn.closest(".calculation-container");
                 calcDiv.querySelectorAll(".sample-block").forEach((block, index) => {
                     if (index === 0) {
-                        block.querySelectorAll("input").forEach(input => input.value = "");
+                        block.querySelectorAll("input, select").forEach(input => input.value = "");
                         block.querySelector(".sample-result").textContent = "-";
                     } else {
                         block.remove();
                     }
                 });
-                calcDiv.querySelector(".organic-value").textContent = "-";
+                calcDiv.querySelector(".result-value").textContent = "-";
             },
 
             calculateTest(btn, method) {
                 const block = btn.closest(".test-flex");
                 const samples = block.querySelectorAll(".sample-block");
-                let organicValues = [];
+                let resultValues = [];
 
-                if (method === 'residues') {
+                if (method === 'humidity') {
                     samples.forEach(sample => {
-                        const residuesMass = parseFloat(sample.querySelector(".residues-mass").value);
-                        const soilMass = parseFloat(sample.querySelector(".soil-mass").value);
-
-                        if (isNaN(residuesMass) || isNaN(soilMass) || residuesMass < 0 || soilMass <= 0) {
+                        const wetMass = parseFloat(sample.querySelector(".wet-mass").value);
+                        const dryMass = parseFloat(sample.querySelector(".dry-mass").value);
+                        if (isNaN(wetMass) || isNaN(dryMass) || wetMass <= dryMass || dryMass <= 0) {
                             sample.querySelector(".sample-result").textContent = "Некорректные данные";
                             return;
                         }
-
-                        const organicContent = (residuesMass / soilMass) * 100;
-                        sample.querySelector(".sample-result").textContent = `${organicContent.toFixed(2)} %`;
-                        organicValues.push(organicContent);
+                        const humidityPercent = ((wetMass - dryMass) / dryMass) * 100;
+                        const humidityDecimal = (wetMass - dryMass) / dryMass;
+                        sample.querySelector(".sample-result").textContent = `${humidityPercent.toFixed(2)} % / ${humidityDecimal.toFixed(4)} д.е.`;
+                        resultValues.push(humidityPercent);
                     });
-                } else if (method === 'calcination') {
+                } else if (method === 'density') {
                     samples.forEach(sample => {
-                        const crucibleWeight = parseFloat(sample.querySelector(".crucible-weight").value);
-                        const beforeWeight = parseFloat(sample.querySelector(".before-weight").value);
-                        const afterWeight = parseFloat(sample.querySelector(".after-weight").value);
-
-                        if (isNaN(crucibleWeight) || isNaN(beforeWeight) || isNaN(afterWeight) || crucibleWeight < 0 || beforeWeight <= crucibleWeight || afterWeight < crucibleWeight) {
+                        const soilMass = parseFloat(sample.querySelector(".soil-mass").value);
+                        const waterMass = parseFloat(sample.querySelector(".water-mass").value);
+                        if (isNaN(soilMass) || isNaN(waterMass) || soilMass <= waterMass || soilMass <= 0) {
                             sample.querySelector(".sample-result").textContent = "Некорректные данные";
                             return;
                         }
-
-                        const drySoilMass = beforeWeight - crucibleWeight;
-                        const calcinedSoilMass = afterWeight - crucibleWeight;
-                        const organicContent = ((drySoilMass - calcinedSoilMass) / drySoilMass) * 100;
-                        sample.querySelector(".sample-result").textContent = `${organicContent.toFixed(2)} %`;
-                        organicValues.push(organicContent);
+                        const density = soilMass / (soilMass - waterMass);
+                        sample.querySelector(".sample-result").textContent = `${density.toFixed(3)} г/см³`;
+                        resultValues.push(density);
+                    });
+                } else if (method === 'water-absorption') {
+                    samples.forEach(sample => {
+                        const humidityValue = parseFloat(sample.querySelector(".humidity-value").value);
+                        const humidityUnit = sample.querySelector(".humidity-unit").value;
+                        const massBefore = parseFloat(sample.querySelector(".mass-before").value);
+                        const massAfter = parseFloat(sample.querySelector(".mass-after").value);
+                        if (isNaN(humidityValue) || isNaN(massBefore) || isNaN(massAfter) || massBefore <= 0 || massAfter < massBefore) {
+                            sample.querySelector(".sample-result").textContent = "Некорректные данные";
+                            return;
+                        }
+                        const waterAbsorptionBase = ((100 * (massAfter - massBefore)) / massBefore) * 0.01;
+                        const waterAbsorption = humidityUnit === 'percent'
+                            ? humidityValue + waterAbsorptionBase
+                            : (humidityValue + waterAbsorptionBase) * 100;
+                        sample.querySelector(".sample-result").textContent = `${waterAbsorption.toFixed(2)} ${humidityUnit === 'percent' ? '%' : 'д.е.'}`;
+                        resultValues.push(waterAbsorption);
+                    });
+                } else if (method === 'abrasion') {
+                    samples.forEach(sample => {
+                        const massBefore = parseFloat(sample.querySelector(".mass-before").value);
+                        const massOver2mm = parseFloat(sample.querySelector(".mass-over-2mm").value);
+                        if (isNaN(massBefore) || isNaN(massOver2mm) || massBefore <= massOver2mm || massBefore <= 0) {
+                            sample.querySelector(".sample-result").textContent = "Некорректные данные";
+                            return;
+                        }
+                        const massUnder2mm = massBefore - massOver2mm;
+                        const abrasionCoefficient = massUnder2mm / massBefore;
+                        sample.querySelector(".sample-result").textContent = `${abrasionCoefficient.toFixed(3)}`;
+                        resultValues.push(abrasionCoefficient);
                     });
                 }
 
-                const avg = organicValues.length >= 1 
-                    ? organicValues.reduce((sum, val) => sum + val, 0) / organicValues.length 
+                const avg = resultValues.length >= 1 
+                    ? resultValues.reduce((sum, val) => sum + val, 0) / resultValues.length 
                     : null;
-                block.querySelector(".organic-value").textContent = avg ? `${avg.toFixed(2)} %` : "Н/Д";
+                if (method === 'abrasion' && avg !== null) {
+                    let strength = '';
+                    if (avg >= 0 && avg <= 0.05) strength = 'очень прочный';
+                    else if (avg > 0.05 && avg <= 0.2) strength = 'прочный';
+                    else if (avg > 0.2 && avg <= 0.3) strength = 'средней прочности';
+                    else if (avg > 0.3 && avg <= 0.4) strength = 'малопрочный';
+                    else if (avg > 0.4) strength = 'пониженной прочности';
+                    block.querySelector(".result-value").textContent = `${avg.toFixed(3)}, ${strength}`;
+                } else {
+                    block.querySelector(".result-value").textContent = avg ? `${avg.toFixed(method === 'abrasion' ? 3 : 2)} ${method === 'humidity' || method === 'water-absorption' ? (method === 'water-absorption' ? (samples[0].querySelector('.humidity-unit').value === 'percent' ? '%' : 'д.е.') : '% / д.е.') : method === 'density' ? 'г/см³' : ''}` : "Н/Д";
+                }
             }
         };
 
