@@ -99,7 +99,7 @@
         }
         .header-text h1 {
             font-size: 24px;
-            color: #2c3e50;
+            color: #2c2e50;
         }
         .header-text p {
             font-size: 16px;
@@ -129,12 +129,8 @@
         }
 
         .section-content {
-            display: none;
+            display: block; /* Изменено с none на block для открытия по умолчанию */
             padding: 10px 0;
-        }
-
-        .section-content.active {
-            display: block;
         }
 
         .section-comment {
@@ -167,14 +163,14 @@
 
         .resource-name {
             font-size: 16px;
-            color: #2c3e50;
+            color: #000000; /* Чёрный цвет текста по умолчанию */
             margin: 0;
+            text-decoration: none; /* Убираем подчёркивание */
         }
 
-        .resource-link {
-            text-decoration: none;
-            color: #1a73e8;
-            font-weight: bold;
+        .resource-name:hover {
+            color: #1a73e8; /* Голубоватый цвет при наведении */
+            text-decoration: underline; /* Добавляем подчёркивание при наведении */
         }
 
         @media screen and (max-width: 768px) {
@@ -214,6 +210,7 @@
         <a href="plastichnost.html">Пределы пластичности</a>
         <a href="plotnost.html">Плотность грунта</a>
         <a href="organic.html">Содержание органических веществ</a>
+        <a href="scale.html">Скальный грунт</a>
         <a href="contacts.html">Контакты</a>
         <a href="reference.html">Справочник</a>
     </div>
@@ -227,36 +224,32 @@
         <div class="section">
             <h2 class="section-title" onclick="App.toggleSection(this)">Электронные ресурсы <span>▼</span></h2>
             <div class="section-comment">
-                Здесь вы можете добавить комментарии о том, как использовать представленные ресурсы, например, где найти актуальные версии стандартов или как применять справочники.
+                В этом разделе вы найдёте ссылки на различные сайты, содержащие актуальные стандарты, ГОСТы, методические рекомендации и другие полезные материалы для геологических исследований.
             </div>
             <div class="section-content">
                 <div class="resource-item">
                     <span class="resource-icon">🌐</span>
                     <div class="resource-info">
-                        <p class="resource-name">ГОСТ 25100-2020 Грунты. Классификация</p>
+                        <a href="https://files.stroyinf.ru/Data2/1/4293719/4293719820.pdf" class="resource-name" target="_blank">ГОСТ 25100-2020 Грунты. Классификация</a>
                     </div>
-                    <a href="https://files.stroyinf.ru/Data2/1/4293719/4293719820.pdf" class="resource-link" target="_blank">Перейти</a>
                 </div>
                 <div class="resource-item">
                     <span class="resource-icon">🌐</span>
                     <div class="resource-info">
-                        <p class="resource-name">ГОСТ 5180-2015 Грунты. Методы лабораторного определения физических характеристик</p>
+                        <a href="https://files.stroyinf.ru/Data/610/61055.pdf" class="resource-name" target="_blank">ГОСТ 5180-2015 Грунты. Методы лабораторного определения физических характеристик</a>
                     </div>
-                    <a href="https://files.stroyinf.ru/Data/610/61055.pdf" class="resource-link" target="_blank">Перейти</a>
                 </div>
                 <div class="resource-item">
                     <span class="resource-icon">🌐</span>
                     <div class="resource-info">
-                        <p class="resource-name">ГОСТ 12536-2014 Грунты. Методы лабораторного определения гранулометрического (зернового) и микроагрегатного состава</p>
+                        <a href="https://files.stroyinf.ru/Data2/1/4293766/4293766967.htm" class="resource-name" target="_blank">ГОСТ 12536-2014 Грунты. Методы лабораторного определения гранулометрического (зернового) и микроагрегатного состава</a>
                     </div>
-                    <a href="https://files.stroyinf.ru/Data2/1/4293766/4293766967.htm" class="resource-link" target="_blank">Перейти</a>
                 </div>
                 <div class="resource-item">
                     <span class="resource-icon">🌐</span>
                     <div class="resource-info">
-                        <p class="resource-name">ГОСТ 23740-2016 Грунты. Методы определения содержания органических веществ</p>
+                        <a href="https://files.stroyinf.ru/Data2/1/4293748/4293748505.pdf" class="resource-name" target="_blank">ГОСТ 23740-2016 Грунты. Методы определения содержания органических веществ</a>
                     </div>
-                    <a href="https://files.stroyinf.ru/Data2/1/4293748/4293748505.pdf" class="resource-link" target="_blank">Перейти</a>
                 </div>
             </div>
         </div>
@@ -267,6 +260,13 @@
             init() {
                 document.addEventListener('DOMContentLoaded', () => {
                     console.log('Reference page loaded');
+                    // Открываем секцию по умолчанию
+                    const sectionContent = document.querySelector('.section-content');
+                    if (sectionContent) {
+                        sectionContent.classList.add('active');
+                        const arrow = document.querySelector('.section-title span');
+                        if (arrow) arrow.textContent = '▲';
+                    }
                 });
             },
 
