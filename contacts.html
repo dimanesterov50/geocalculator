@@ -182,13 +182,11 @@ body::before {
     </div>
 
     <div class="feedback-form">
-        <h2>Свяжитесь с нами</h2>
+        <h2>пРОВЕРКА</h2>
         <p>Оставьте ваше сообщение, и мы свяжемся с вами!</p>
         <form action="https://formspree.io/f/xdkwdver" method="POST" id="contact-form">
             <input type="hidden" name="_subject" value="Новое сообщение с сайта Геологические расчёты">
             <input type="hidden" name="_next" value="https://geocalculator.ru/thanks.html?status=success">
-            <input type="hidden" name="_blacklist" value="спам,бот,реклама,viagra,http,casino,click">
-            <input type="hidden" name="_honeypot" value="">
             
             <label for="name">Имя:</label>
             <input type="text" id="name" name="name" required placeholder="Введите ваше имя">
@@ -234,7 +232,6 @@ body::before {
         function onRecaptchaSuccess(token) {
             console.log('reCAPTCHA success, token:', token);
             document.getElementById('submit-button').disabled = false;
-            // Добавляем токен в форму
             const form = document.getElementById('contact-form');
             let tokenInput = form.querySelector('input[name="g-recaptcha-response"]');
             if (!tokenInput) {
@@ -268,11 +265,19 @@ body::before {
                 const responseBody = await response.text();
                 console.log('Formspree response body:', responseBody);
 
-                if (response.ok) {
+                // Проверяем на ошибки в JSON
+                let responseJson = {};
+                try {
+                    responseJson = JSON.parse(responseBody);
+                } catch (e) {
+                    console.log('Response is not JSON');
+                }
+
+                if (response.ok && (!responseJson.errors || responseJson.errors.length === 0)) {
                     console.log('Redirecting to success page');
                     window.location.href = 'https://geocalculator.ru/thanks.html?status=success';
                 } else {
-                    console.log('Redirecting to error page due to status:', response.status);
+                    console.log('Redirecting to error page due to status or errors:', response.status, responseJson.errors || 'No errors in JSON');
                     window.location.href = 'https://geocalculator.ru/thanks.html?status=error';
                 }
             } catch (error) {
