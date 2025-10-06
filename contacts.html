@@ -237,11 +237,15 @@ body::before {
             document.getElementById('submit-button').disabled = false;
             // Добавляем токен в форму
             const form = document.getElementById('contact-form');
-            const tokenInput = document.createElement('input');
-            tokenInput.type = 'hidden';
-            tokenInput.name = 'g-recaptcha-response';
+            let tokenInput = form.querySelector('input[name="g-recaptcha-response"]');
+            if (!tokenInput) {
+                tokenInput = document.createElement('input');
+                tokenInput.type = 'hidden';
+                tokenInput.name = 'g-recaptcha-response';
+                form.appendChild(tokenInput);
+            }
             tokenInput.value = token;
-            form.appendChild(tokenInput);
+            console.log('reCAPTCHA token added to form:', token);
         }
 
         // Перехват отправки формы
@@ -261,19 +265,19 @@ body::before {
                     redirect: 'manual' // Игнорируем HTTP-редиректы
                 });
 
-                console.log('Web3Forms response:', response.status, response);
+                console.log('Web3Forms response status:', response.status);
                 const responseBody = await response.text();
-                console.log('Response body:', responseBody);
+                console.log('Web3Forms response body:', responseBody);
 
                 if (response.ok) {
                     console.log('Redirecting to success page');
                     window.location.href = 'https://geocalculator.ru/thanks.html?status=success';
                 } else {
-                    console.log('Redirecting to error page');
+                    console.log('Redirecting to error page due to status:', response.status);
                     window.location.href = 'https://geocalculator.ru/thanks.html?status=error';
                 }
             } catch (error) {
-                console.error('Form submission error:', error);
+                console.error('Form submission error:', error.message);
                 window.location.href = 'https://geocalculator.ru/thanks.html?status=error';
             }
         });
